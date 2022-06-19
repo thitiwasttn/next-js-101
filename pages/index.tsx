@@ -6,6 +6,7 @@ import Layout, {siteTitle} from "../components/Layout";
 import utilStyles from '../styles/utils.module.css';
 import {getSortedPostsData} from "../lib/post";
 import {GetServerSideProps, GetStaticProps} from "next";
+import Date2 from '../components/date'
 
 type Prop = {
     allPostsData: any,
@@ -28,11 +29,16 @@ export default function Home(myProp: Prop) {
                 <ul className={utilStyles.list}>
                     {myProp.allPostsData.map(({id, date, title}) => (
                         <li className={utilStyles.listItem} key={id}>
-                            {title}
+                            <Link href={`/posts/${id}`}>
+                                <a>{title}</a>
+                            </Link>
                             <br/>
-                            <Link href={`/posts/${id}`}><a>{id}</a></Link>
-                            <br/>
-                            {date}
+                            {
+                                date ? <small className={utilStyles.lightText}>
+                                    <Date2 dateString={date}/>
+                                </small> : null
+                            }
+
                         </li>
                     ))}
                 </ul>
